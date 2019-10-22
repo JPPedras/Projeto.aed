@@ -1,0 +1,34 @@
+
+#  Compiler
+CC = gcc
+
+#  Compiler Flags
+CFLAGS = -g -Wall -ansi
+
+
+%.o: %.c
+
+#Campista
+
+#Sources
+CAMPSOURCES = print.c print.h campista.c
+
+CAMPOBJECTS = print.o campista.o
+
+campista: $(CAMPOBJECTS)
+	$(CC) -g -o $@ $(CAMPOBJECTS)
+
+print.o: print.c print.h
+	$(CC) -g -c print.c
+
+campista.o: defs.h print.h campista.c
+	$(CC) -g -c campista.c
+
+clean::
+	rm -f campista.o
+
+#depend::
+#	makedepend $(SOURCES)
+
+
+# DO NOT DELETE
