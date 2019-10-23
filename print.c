@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include"print.h"
 
-void printoi(void){
+void printoi(){
 
   printf("oi\n");
 

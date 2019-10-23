@@ -1,9 +1,9 @@
 
 #  Compiler
-CC = gcc
+CC =	gcc
 
 #  Compiler Flags
-CFLAGS = -g -Wall -ansi
+CFLAGS = -Wall -O3
 
 
 %.o: %.c
@@ -16,16 +16,16 @@ CAMPSOURCES = print.c print.h campista.c
 CAMPOBJECTS = print.o campista.o
 
 campista: $(CAMPOBJECTS)
-	$(CC) -g -o $@ $(CAMPOBJECTS)
+	$(CC) -Wall -O3 $(CAMPOBJECTS)
 
-print.o: print.c print.h
-	$(CC) -g -c print.c
+print.o: print.h print.c
+	$(CC) -Wall -O3 print.c
 
-campista.o: defs.h print.h campista.c
-	$(CC) -g -c campista.c
+campista.o: print.h campista.c
+	$(CC) -Wall -O3 campista.c
 
-clean::
-	rm -f campista.o
+#clean::
+#	rm -f campista.o
 
 #depend::
 #	makedepend $(SOURCES)
