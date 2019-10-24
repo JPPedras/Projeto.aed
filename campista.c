@@ -9,7 +9,7 @@ pb *prob;
 int main(int argc, char *argv[]){
 
   FILE *fp;
-  int out=0;
+  int out=0, write_val;
 
   fp=fopen(argv[1],"r");
 
@@ -25,7 +25,12 @@ int main(int argc, char *argv[]){
     if(out==1)
       break;
 
-    check(prob);
+    /*switch(prob->type){
+      case 'A':*/
+        write_val=check(prob);
+    //}
+
+    printf("write_val: %d\n",write_val);
 
     FreeMap(prob);
 
