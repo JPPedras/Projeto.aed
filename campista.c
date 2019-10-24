@@ -1,35 +1,35 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include"files.h"
+#include"analysis.h"
 
-#include"print.h"
-
-typedef struct{
-
-  int L;
-  int C;
-  int *lines;
-  int *columns;
-  char **map;
-
-}pb;
+pb *prob;
 
 int main(int argc, char *argv[]){
 
   FILE *fp;
-  pb *prob;
-
-  prob=(pb*)malloc(sizeof(pb));
+  int out=0;
 
   fp=fopen(argv[1],"r");
 
-  do{
-    
+  if (fp == (FILE*) NULL) {
+    exit(1);
+  }
 
-  }while(feof(fp)!=NULL);
+  ProbInit(prob);
 
+  while(1){
 
-  free(prob);
+    out=LoadProb(&fp,prob);
+    if(out==1)
+      break;
 
+    check(prob);
 
+    FreeMap(prob);
+
+}
+  FreeProb(prob);
+  fclose(fp);
   return 0;
 }
