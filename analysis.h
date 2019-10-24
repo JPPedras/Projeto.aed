@@ -1,5 +1,6 @@
 #ifndef AnalysisHeader
 #define AnalysisHeader
+
 #include"files.h"
 
 void check(pb *prob);  //problema A

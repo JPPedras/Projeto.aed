@@ -1,14 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include"files.h"
 
+#include"files.h"
 
 int LoadProb(FILE **fp, pb *prob){
 
   int i,j;
-
-
-  printf("oi\n");
 
   if(fscanf(*fp,"%d %d %c",&(prob->L),&(prob->C),&(prob->type))<3){
     return 1;
@@ -85,7 +82,9 @@ void FreeMap(pb *prob){
 
 }
 
-void ProbInit(pb *prob){
+void ProbInit(pb **prob){
 
-  prob=(pb*)malloc(sizeof(pb));
+  (*prob)=(pb*)malloc(sizeof(pb));
+  if((*prob)==NULL)
+    printf("erro\n");
 }

@@ -15,17 +15,13 @@ typedef struct pb{
 }pb;
 
 
-/*
-
-
-*/
 int LoadProb(FILE **fp,pb *prob);
 
 void FreeProb(pb *prob);
 
 void FreeMap(pb *prob);
 
-void ProbInit(pb *prob);
+void ProbInit(pb **prob);
 
 
 

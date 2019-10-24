@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+
 #include"files.h"
 #include"analysis.h"
 
@@ -16,7 +17,7 @@ int main(int argc, char *argv[]){
     exit(1);
   }
 
-  ProbInit(prob);
+  ProbInit(&prob);
 
   while(1){
 
