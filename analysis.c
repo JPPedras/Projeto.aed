@@ -30,7 +30,7 @@ int check_a(pb *prob){
 
 int check_b(pb *prob){
 
-  int tree_count=0,i,*tent_count,*a_sides,retval=0;
+  int tree_count=0,i,j,k=0,*tent_count,*a_sides,retval=0,op[3]={-1,0,1},tents=0;
 
   a_sides=(int*)malloc(8*sizeof(int));
   tent_count=(int*)malloc(2*sizeof(int));
@@ -62,22 +62,20 @@ int check_b(pb *prob){
     a_sides[4]=-1;
     a_sides[7]=-1;
   }
-
-  if(a_sides[0]==0)
-    if(prob->map[(prob->cd[0])-1][(prob->cd[1])]=='A')
-      tree_count++;
-  if(a_sides[1]==0)
-    if(prob->map[(prob->cd[0])+1][(prob->cd[1])]=='A')
-      tree_count++;
-  if(a_sides[2]==0)
-    if(prob->map[(prob->cd[0])][(prob->cd[1])-1]=='A')
-      tree_count++;
-  if(a_sides[3]==0){
-    if(prob->map[(prob->cd[0])][(prob->cd[1]+1)]=='A')
-      tree_count++;
+  for(i=0;i<3;i++){
+    for(j=0;j<3;j++){
+      if(op[i]==0 && op[j]==0)
+        continue;
+      if(a_sides[k]==0){
+        if(prob->map[(prob->cd[0])+op[i]][(prob->cd[1])+op[j]]=='T')
+          tents++;
+        if((prob->map[(prob->cd[0])+op[i]][(prob->cd[1])+op[j]]=='A') && (op[i]==0 || op[j]==0))
+          tree_count++;
+      }
+      k++;
+    }
   }
-
-  if(tree_count==0){
+  if(tree_count==0 || tents!=0){
     retval=1;
   }
 
@@ -97,6 +95,7 @@ int check_b(pb *prob){
   free(tent_count);
 
   printf("trees:%d\n",tree_count);
+  printf("tents:%d\n",tents);
   return(retval);
 }
 
