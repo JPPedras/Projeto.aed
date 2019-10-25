@@ -3,9 +3,9 @@
 
 #include"files.h"
 
-int check(pb *prob);  //problema A
-//void analisysB();  //problema B
-//void analisysC();  //problema C
+int check_a(pb *prob);  //problema A
+int check_b(pb *prob);  //problema B
+int check_c(pb *prob);  //problema C
 
 
 #endif

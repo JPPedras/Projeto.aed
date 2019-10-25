@@ -25,10 +25,16 @@ int main(int argc, char *argv[]){
     if(out==1)
       break;
 
-    /*switch(prob->type){
-      case 'A':*/
-        write_val=check(prob);
-    //}
+    switch(prob->type){
+      case 'A':
+        write_val=check_a(prob);
+        break;
+      case 'B':
+        write_val=check_b(prob);
+        break;
+      default:
+        write_val=check_c(prob);
+    }
 
     printf("write_val: %d\n",write_val);
 

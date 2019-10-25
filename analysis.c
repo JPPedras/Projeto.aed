@@ -5,7 +5,7 @@
 #include"files.h"
 
 
-int check(pb *prob){
+int check_a(pb *prob){
 
   int tent_count[2]={0}, tree_count=0, i,j;
 
@@ -26,4 +26,36 @@ int check(pb *prob){
     return(0);
 
   return 1;
+}
+
+int check_b(pb *prob){
+
+  int tree_count=0,i,j=1,*diret;
+
+  diret=(int*)malloc(4*sizeof(int));
+
+  if(prob->cd[0]==0)
+    diret[0]=-1;
+  if(prob->cd[0]==(prob->L)-1)
+    down=-1
+
+
+  for(i=0;i<2;i++){
+
+    if((prob->map[(prob->cd[0])+i][(prob->cd[1])-j]=='A') || (prob->map[(prob->cd[0])-j][(prob->cd[1])+i]=='A')) {
+        tree_count++;
+    }
+    j=0;
+  }
+
+  printf("trees:%d\n",tree_count);
+  return(1);
+}
+
+
+int check_c(pb *prob){
+
+
+
+  return(1);
 }
