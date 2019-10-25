@@ -32,24 +32,36 @@ int check_b(pb *prob){
 
   int tree_count=0,i,*tent_count,*a_sides,retval=0;
 
-  a_sides=(int*)malloc(4*sizeof(int));
+  a_sides=(int*)malloc(8*sizeof(int));
   tent_count=(int*)malloc(2*sizeof(int));
 
-  for(i=0;i<4;i++){
+  for(i=0;i<8;i++){
     a_sides[i]=0;
   }
   for(i=0;i<2;i++){
     tent_count[i]=0;
   }
 
-  if(prob->cd[0]==0)
+  if(prob->cd[0]==0){
     a_sides[0]=-1;
-  if(prob->cd[0]==(prob->L)-1)
     a_sides[1]=-1;
-  if(prob->cd[1]==0)
     a_sides[2]=-1;
-  if(prob->cd[1]==(prob->C)-1)
+  }
+  if(prob->cd[0]==(prob->L)-1){
+    a_sides[5]=-1;
+    a_sides[6]=-1;
+    a_sides[7]=-1;
+  }
+  if(prob->cd[1]==0){
+    a_sides[0]=-1;
     a_sides[3]=-1;
+    a_sides[5]=-1;
+  }
+  if(prob->cd[1]==(prob->C)-1){
+    a_sides[2]=-1;
+    a_sides[4]=-1;
+    a_sides[7]=-1;
+  }
 
   if(a_sides[0]==0)
     if(prob->map[(prob->cd[0])-1][(prob->cd[1])]=='A')
@@ -60,9 +72,10 @@ int check_b(pb *prob){
   if(a_sides[2]==0)
     if(prob->map[(prob->cd[0])][(prob->cd[1])-1]=='A')
       tree_count++;
-  if(a_sides[3]==0)
-    if(prob->map[(prob->cd[0])-1][(prob->cd[1]+1)]=='A')
+  if(a_sides[3]==0){
+    if(prob->map[(prob->cd[0])][(prob->cd[1]+1)]=='A')
       tree_count++;
+  }
 
   if(tree_count==0){
     retval=1;
