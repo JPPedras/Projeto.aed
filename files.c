@@ -11,8 +11,13 @@ int LoadProb(FILE **fp, pb *prob){
     return 1;
   }
 
+
   if(prob->type=='B'){
     fscanf(*fp,"%d %d",&(prob->cd[0]),&(prob->cd[1]));
+  }
+  else{
+    prob->cd[0]=0;
+    prob->cd[1]=0;
   }
 
   prob->lines=(int*)malloc(prob->L*sizeof(int));
@@ -58,8 +63,8 @@ int LoadProb(FILE **fp, pb *prob){
       printf("%c",prob->map[i][j]);
     }
     printf("\n");
-  }*/
-  //printf("L:%d C:%d type:%c\n",prob->L,prob->C,prob->type);
+  }
+  printf("L:%d C:%d type:%c\n",prob->L,prob->C,prob->type);*/
 
 
   return(0);

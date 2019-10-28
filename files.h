@@ -11,6 +11,7 @@ typedef struct pb{
   int *lines;
   int *columns;
   char **map;
+  char **flag;
 
 }pb;
 
