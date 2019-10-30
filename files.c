@@ -50,7 +50,7 @@ int LoadProb(FILE **fp, pb *prob){
     }
   }
 
-  /*for(i=0;i<prob->L;i++){
+  for(i=0;i<prob->L;i++){
     printf("%d",prob->lines[i]);
   }
   printf("\n");
@@ -64,7 +64,7 @@ int LoadProb(FILE **fp, pb *prob){
     }
     printf("\n");
   }
-  printf("L:%d C:%d type:%c\n",prob->L,prob->C,prob->type);*/
+  printf("L:%d C:%d type:%c\n",prob->L,prob->C,prob->type);
 
 
   return(0);
