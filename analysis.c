@@ -141,7 +141,7 @@ int check_c(pb *prob){
 
   for(i=0;i<prob->L;i++){
     for(j=0;j<prob->C;j++){
-      if(prob->map[i][j]=='T'){
+      if(prob->map[i][j]=='T' && prob->flag[i][j]=='0'){
         result=Tree_Tent(prob,i,j);
         if(result==1){
           for(k=0;k<prob->L;k++){
@@ -164,7 +164,7 @@ int check_c(pb *prob){
 
 int Tree_Tent(pb *prob,int n,int m){
 
-  int result,op[3]={-1,0,1},i=0,j=0;
+  int result,op[3]={1,-1,0},found=0,i=0,j=0;
   char S;
 
 
@@ -195,12 +195,16 @@ int Tree_Tent(pb *prob,int n,int m){
           //printf("n: %d   m:%d\n",n,m);
           //printf("op[i]: %d   op[j]:%d\n",op[i],op[j]);
           if(prob->flag[n+op[i]][m+op[j]]=='0'){
-
             result=Tree_Tent(prob,n+op[i],m+op[j]);
             if(prob->map[n][m]=='T' && result==1)
               return 1;
-            if(prob->map[n][m]=='A' && result==0)
-              return 0;
+            /*if(prob->map[n][m]=='A' && result==0)
+              return 0;*/
+            if(result==1){
+              return 1;
+            }
+            found=1;
+
           }
         }
       }
@@ -223,5 +227,9 @@ int Tree_Tent(pb *prob,int n,int m){
         Tree_Tent(prob,i,j+1);
   }*/
 
-  return 1;
+  printf("found: %d\n",found);
+  if(prob->map[n][m]=='T' && found==0){
+    return 1;
+  }
+  return 0;
 }
