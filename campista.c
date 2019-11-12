@@ -25,15 +25,23 @@ int main(int argc, char *argv[]){
     if(out==1)
       break;
 
-    switch(prob->type){
-      case 'A':
-        write_val=check_a(prob);
-        break;
-      case 'B':
-        write_val=check_b(prob);
-        break;
-      default:
-        write_val=check_c(prob);
+    if(prob->cd[0]>=prob->L || prob->cd[1]>=prob->C){
+      write_val=-1;
+    }
+    else{
+      switch(prob->type){
+        case 'A':
+          write_val=check_a(prob);
+          break;
+        case 'B':
+          write_val=check_b(prob);
+          break;
+        case 'C':
+          write_val=check_c(prob);
+          break;
+        default:
+          write_val=-1;
+      }
     }
 
     printf("write_val: %d\n",write_val);
