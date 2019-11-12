@@ -1,7 +1,6 @@
 #ifndef FilesHeader
 #define FilesHeader
 
-
 typedef struct pb{
 
   int L;
@@ -23,6 +22,10 @@ void FreeProb(pb *prob);
 void FreeMap(pb *prob);
 
 void ProbInit(pb **prob);
+
+void ExtFile(char *argv, char **fileOut);
+
+void writeFile(pb *prob,int write_val,FILE **fp1);
 
 
 

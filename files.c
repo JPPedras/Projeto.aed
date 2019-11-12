@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 #include"files.h"
 
@@ -13,7 +14,9 @@ int LoadProb(FILE **fp, pb *prob){
 
 
   if(prob->type=='B'){
-    fscanf(*fp,"%d %d",&(prob->cd[0]),&(prob->cd[1]));
+    if(fscanf(*fp,"%d %d",&(prob->cd[0]),&(prob->cd[1]))<2){
+      return 1;
+    }
   }
   else{
     prob->cd[0]=0;
@@ -22,13 +25,11 @@ int LoadProb(FILE **fp, pb *prob){
 
   prob->lines=(int*)malloc(prob->L*sizeof(int));
   if(prob->lines==NULL){
-    printf("Erro de memoria\n");
     exit(0);
   }
 
   prob->columns=(int*)malloc(prob->C*sizeof(int));
   if(prob->columns==NULL){
-    printf("Erro de memoria\n");
     exit(0);
   }
 
@@ -38,19 +39,22 @@ int LoadProb(FILE **fp, pb *prob){
   }
 
   for(i=0;i<prob->L;i++){
-    fscanf(*fp,"%d",&(prob->lines[i]));
+    if(fscanf(*fp,"%d",&(prob->lines[i]))<1)
+      return 1;
   }
   for(i=0;i<prob->C;i++){
-    fscanf(*fp,"%d",&(prob->columns[i]));
+    if(fscanf(*fp,"%d",&(prob->columns[i]))<1)
+      return 1;
   }
 
   for(i=0;i<prob->L;i++){
     for(j=0;j<prob->C;j++){
-      fscanf(*fp," %c",&(prob->map[i][j]));
+      if(fscanf(*fp," %c",&(prob->map[i][j]))<1)
+        return 1;
     }
   }
 
-  for(i=0;i<prob->L;i++){
+  /*for(i=0;i<prob->L;i++){
     printf("%d",prob->lines[i]);
   }
   printf("\n");
@@ -64,7 +68,7 @@ int LoadProb(FILE **fp, pb *prob){
     }
     printf("\n");
   }
-  printf("L:%d C:%d type:%c\n",prob->L,prob->C,prob->type);
+  printf("L:%d C:%d type:%c\n",prob->L,prob->C,prob->type);*/
 
 
   return(0);
@@ -91,5 +95,32 @@ void ProbInit(pb **prob){
 
   (*prob)=(pb*)malloc(sizeof(pb));
   if((*prob)==NULL)
-    printf("erro\n");
+    printf("erro de memoria\n");
+}
+
+void ExtFile(char* argv, char** fileOut){
+
+  int i=0;
+
+  (*fileOut)=(char*)malloc((strlen(argv)+2)*sizeof(char));
+
+  while(argv[i]!='.'){
+    (*fileOut)[i]=argv[i];
+    i++;
+  }
+  (*fileOut)[i]='\0';
+  strcat(*fileOut,".tents0");
+
+  return;
+}
+
+void writeFile(pb *prob,int write_val,FILE **fp1){
+
+  if(prob->type=='B'){
+    fprintf(*fp1,"%d %d %c %d %d %d\n",prob->L,prob->C,prob->type,prob->cd[0],prob->cd[1],write_val);
+  }
+  else{
+    fprintf(*fp1,"%d %d %c %d\n\n",prob->L,prob->C,prob->type,write_val);
+  }
+
 }

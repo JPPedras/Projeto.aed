@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 #include"files.h"
 #include"analysis.h"
@@ -8,14 +9,17 @@ pb *prob;
 
 int main(int argc, char *argv[]){
 
-  FILE *fp;
+  FILE *fp,*fp1;
   int out=0, write_val;
+  char* fileOut;
 
   fp=fopen(argv[1],"r");
-
   if (fp == (FILE*) NULL) {
     exit(1);
   }
+  ExtFile(argv[1],&fileOut);
+
+  fp1=fopen(fileOut,"w");
 
   ProbInit(&prob);
 
@@ -43,13 +47,16 @@ int main(int argc, char *argv[]){
           write_val=-1;
       }
     }
-
-    printf("write_val: %d\n",write_val);
+    writeFile(prob,write_val,&fp1);
 
     FreeMap(prob);
 
 }
   FreeProb(prob);
+  free(fileOut);
+
   fclose(fp);
+  fclose(fp1);
+
   return 0;
 }
