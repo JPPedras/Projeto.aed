@@ -69,11 +69,12 @@ int LoadProb(FILE **fp, pb *prob){
   /*for(i=0;i<prob->L;i++){
     printf("%d",prob->lines[i]);
   }
-  printf("\n");
+  printf("i\n");
   for(i=0;i<prob->C;i++){
     printf("%d",prob->columns[i]);
   }
-  printf("\n");
+  printf("\n\n\n");
+
   for(i=0;i<prob->L;i++){
     for(j=0;j<prob->C;j++){
       printf("%c",prob->map[i][j]);

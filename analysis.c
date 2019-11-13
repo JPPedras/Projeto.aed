@@ -21,6 +21,7 @@ int check_a(pb *prob){
         tree_count++;
     }
   }
+  //printf("tents: %d/%d -- trees: %d\n",tent_count[0],tent_count[1],tree_count);
 
   if(tent_count[0]!=tent_count[1] || tree_count<tent_count[0])
     return(0);
@@ -30,12 +31,16 @@ int check_a(pb *prob){
 
 int check_b(pb *prob){
 
-  int tree_count=0,i,j,k=0,*tent_count,retval=0,op[3]={-1,0,1},tents=0;
+  int tree_count=0,i,j,k=0,*tent_count,retval=0,result,op[3]={-1,0,1},tents=0;
 
   if(prob->map[prob->cd[0]][prob->cd[1]]=='A'){
     retval=1;
     return retval;
   }
+  /*result=check_a(prob);
+  if(result==0){
+    return 1;
+  }*/
   //printf("ok2\n");
 
   //a_sides=(int*)malloc(8*sizeof(int));
@@ -110,14 +115,10 @@ int check_b(pb *prob){
 
 int check_c(pb *prob){
 
-  int result=0,i,j,k;
+  int result=0,i,j;
 
-  /*result=check_a(prob);
 
-  if(result==0){
-    return(1);
-  }*/
-  prob->flag=(char**)malloc(prob->L*sizeof(char*));
+  /*prob->flag=(char**)malloc(prob->L*sizeof(char*));
   for(i=0;i<prob->L;i++){
     prob->flag[i]=(char*)malloc(prob->C*sizeof(char));
   }
@@ -126,7 +127,7 @@ int check_c(pb *prob){
     for(j=0;j<prob->C;j++){
       prob->flag[i][j]='0';
     }
-  }
+  }*/
 
 
   for(i=0;i<prob->L;i++){
@@ -136,10 +137,10 @@ int check_c(pb *prob){
       if(prob->map[i][j]=='T'){
         result=check_b(prob);
         if(result==1){
-          for(i=0;i<prob->L;i++){
+          /*for(i=0;i<prob->L;i++){
             free(prob->flag[i]);
           }
-          free(prob->flag);
+          free(prob->flag);*/
           return(1);
         }
       }
@@ -148,14 +149,14 @@ int check_c(pb *prob){
 
   for(i=0;i<prob->L;i++){
     for(j=0;j<prob->C;j++){
-      if(prob->map[i][j]=='T' && prob->flag[i][j]=='0'){
+      if(prob->map[i][j]=='T'){
         result=0;
         Tree_Tent(prob,i,j,&result);
         if(result==0){
-          for(k=0;k<prob->L;k++){
+          /*for(k=0;k<prob->L;k++){
             free(prob->flag[k]);
           }
-          free(prob->flag);
+          free(prob->flag);*/
           return(1);
         }
       }
@@ -163,10 +164,10 @@ int check_c(pb *prob){
   }
 
 
-  for(i=0;i<prob->L;i++){
+  /*for(i=0;i<prob->L;i++){
     free(prob->flag[i]);
   }
-  free(prob->flag);
+  free(prob->flag);*/
   return(0);
 }
 
@@ -181,13 +182,15 @@ void Tree_Tent(pb *prob,int n,int m,int *result){
     return(1);
   }*/
   //prob->map[n][m]=='T'){
-  prob->flag[n][m]='1';
+  //prob->flag[n][m]='1';
   //}
 
   if(prob->map[n][m]=='A')
     S='T';
   else
     S='A';
+
+  prob->map[n][m]='.';
 
   for(i=0;i<3;i++){
     for(j=0;j<3;j++){
@@ -199,13 +202,13 @@ void Tree_Tent(pb *prob,int n,int m,int *result){
       if(prob->map[n+op[i]][m+op[j]]==S){
         //printf("n: %d   m:%d\n",n,m);
         //printf("op[i]: %d   op[j]:%d\n",op[i],op[j]);
-        if(prob->flag[n+op[i]][m+op[j]]=='0'){
-          found=1;
-          Tree_Tent(prob,n+op[i],m+op[j],result);
-        }
+        //if(prob->flag[n+op[i]][m+op[j]]=='0'){
+        found=1;
+        Tree_Tent(prob,n+op[i],m+op[j],result);
       }
     }
   }
+
 
   /*if(prob->map[i][j]=='T'){
     prob->flag[i][j]='1';
@@ -224,7 +227,7 @@ void Tree_Tent(pb *prob,int n,int m,int *result){
   }*/
 
   //printf("found: %d\n",found);
-  if(prob->map[n][m]=='A' && found==0){
+  if(S=='T' && found==0){
     *result=1;
   }
   return;
