@@ -12,6 +12,7 @@ int main(int argc, char *argv[]){
   FILE *fp,*fp1;
   int out=0, write_val;
   char* fileOut;
+  int i=0;
 
   fp=fopen(argv[1],"r");
   if (fp == (FILE*) NULL) {
@@ -25,9 +26,11 @@ int main(int argc, char *argv[]){
 
   while(1){
 
+
     out=LoadProb(&fp,prob);
 
     if(out==1){
+
       break;
     }
     else if(out==2){
@@ -40,6 +43,7 @@ int main(int argc, char *argv[]){
           write_val=check_a(prob);
           break;
         case 'B':
+          //printf("%d\n",i);
           write_val=check_b(prob);
           break;
         case 'C':
@@ -52,7 +56,7 @@ int main(int argc, char *argv[]){
 
       FreeMap(prob);
     }
-
+    i++;
 }
   FreeProb(prob);
   free(fileOut);

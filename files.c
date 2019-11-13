@@ -7,6 +7,7 @@
 int LoadProb(FILE **fp, pb *prob){
 
   int i,j;
+  char buff;
 
   if(fscanf(*fp,"%d %d %c",&(prob->L),&(prob->C),&(prob->type))<3){
     return 1;
@@ -18,6 +19,14 @@ int LoadProb(FILE **fp, pb *prob){
       return 1;
     }
     if(prob->cd[0] >= prob->L || prob->cd[0] < 0 || prob->cd[1] >= prob->C || prob->cd[1] < 0){
+      for(i=0;i<(prob->L)+3;i++){
+        while(fscanf(*fp,"%c",&buff)>0){
+          if(buff=='\n'){
+            break;
+          }
+        }
+      }
+
       return 2;
     }
   }
@@ -97,8 +106,8 @@ void FreeMap(pb *prob){
 void ProbInit(pb **prob){
 
   (*prob)=(pb*)malloc(sizeof(pb));
-  if((*prob)==NULL)
-    printf("erro de memoria\n");
+  //if((*prob)==NULL)
+  //printf("erro de memoria\n");
 }
 
 void ExtFile(char* argv, char** fileOut){
