@@ -17,6 +17,9 @@ int LoadProb(FILE **fp, pb *prob){
     if(fscanf(*fp,"%d %d",&(prob->cd[0]),&(prob->cd[1]))<2){
       return 1;
     }
+    if(prob->cd[0] >= prob->L || prob->cd[0] < 0 || prob->cd[1] >= prob->C || prob->cd[1] < 0){
+      return 1;
+    }
   }
   else{
     prob->cd[0]=0;
