@@ -33,7 +33,13 @@ int check_b(pb *prob){
   int tree_count=0,i,j,k=0,*tent_count,*a_sides,retval=0,op[3]={-1,0,1},tents=0;
 
   if(prob->cd[0] >= prob->L || prob->cd[0] < 0 || prob->cd[1] >= prob->C || prob->cd[1] < 0){
-    return retval=-1;
+    retval=-1;
+    return retval;
+  }
+
+  if(prob->map[cd[0]][cd[1]]=='A'){
+    retval=1;
+    return retval;
   }
 
   a_sides=(int*)malloc(8*sizeof(int));
