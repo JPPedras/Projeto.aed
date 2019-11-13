@@ -26,11 +26,13 @@ int main(int argc, char *argv[]){
   while(1){
 
     out=LoadProb(&fp,prob);
-    if(out==1)
-      break;
 
-    if(prob->cd[0]>=prob->L || prob->cd[1]>=prob->C){
+    if(out==1){
+      break;
+    }
+    else if(out==2){
       write_val=-1;
+      writeFile(prob,write_val,&fp1);
     }
     else{
       switch(prob->type){
@@ -46,10 +48,10 @@ int main(int argc, char *argv[]){
         default:
           write_val=-1;
       }
-    }
-    writeFile(prob,write_val,&fp1);
+      writeFile(prob,write_val,&fp1);
 
-    FreeMap(prob);
+      FreeMap(prob);
+    }
 
 }
   FreeProb(prob);
