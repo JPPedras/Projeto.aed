@@ -117,7 +117,7 @@ void ExtFile(char* argv, char** fileOut){
 void writeFile(pb *prob,int write_val,FILE **fp1){
 
   if(prob->type=='B'){
-    fprintf(*fp1,"%d %d %c %d %d %d\n",prob->L,prob->C,prob->type,prob->cd[0],prob->cd[1],write_val);
+    fprintf(*fp1,"%d %d %c %d %d %d\n\n",prob->L,prob->C,prob->type,prob->cd[0],prob->cd[1],write_val);
   }
   else{
     fprintf(*fp1,"%d %d %c %d\n\n",prob->L,prob->C,prob->type,write_val);
