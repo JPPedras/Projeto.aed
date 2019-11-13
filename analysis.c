@@ -37,7 +37,7 @@ int check_b(pb *prob){
     return retval;
   }
 
-  if(prob->map[cd[0]][cd[1]]=='A'){
+  if(prob->map[prob->cd[0]][prob->cd[1]]=='A'){
     retval=1;
     return retval;
   }
