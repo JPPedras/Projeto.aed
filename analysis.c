@@ -4,33 +4,75 @@
 #include"analysis.h"
 #include"files.h"
 
-int SolveMapL(pb *prob){
+int SolveMapL(pb *prob, FILE **fp1){
 
-  int i,*grass_Lcount,*grass_Ccount,act=0,retval=0;
+  printf("oi\n");
 
-
-  grass_Lcount=(int*)malloc(prob->L*sizeof(int));
-  grass_Ccount=(int*)malloc(prob->C*sizeof(int));
-
+  int i,j,k,l,out=0,act=0,retval=0;
 
   while(1){
     for(i=0;i<prob->L;i++){
-      grass_Lcount[i]=0;
+      prob->Lslots[i]=0;
     }
     for(i=0;i<prob->C;i++){
-      grass_Ccount[i]=0;
+      prob->Cslots[i]=0;
     }
     act=0;
-    act=PutR(prob,grass_Lcount,grass_Ccount);
-    act=PutT(prob,grass_Lcount,grass_Ccount);
-
+    act=PutR(prob);
+    act=PutT(prob);
+    for(k=0;k<prob->L;k++){
+      for(l=0;l<prob->C;l++){
+        printf("%c",prob->map[k][l]);
+      }
+      printf("\n");
+    }
+    printf("\n\n");
     if(act==0){
       break;
     }
+    if(act==-1){
+      return(-1);
+    }
   }
 
-  for(i=0;i)
+  //printf("oi\n");
+  for(i=0;i<prob->L;i++){
+    if(prob->lines[i]==0){
+      out++;
+    }
+  }
+  for(i=0;i<prob->C;i++){
+    if(prob->columns[i]==0){
+      out++;
+    }
+  }
+  if(out == prob->L + prob->C){
 
+    writeFile(prob,1,fp1);
+
+    return 1;
+  }
+
+
+
+  for(i=0;i<prob->L;i++){
+    for(j=0;j<prob->C;j++){
+      if(prob->map[i][j]=='.'){
+        act=1;
+        prob->lines[i]--;
+        prob->columns[j]--;
+        prob->Lslots[i]--;
+        prob->Cslots[j]--;
+        prob->map[i][j]='T';
+        retval=SolveMapL(prob,fp1);
+        if(retval==1){
+          return 1;
+        }
+        prob->map[i][j]='R';
+      }
+    }
+  }
+  return retval;
 
 
 
@@ -44,17 +86,9 @@ int SolveMapL(pb *prob){
 
       */
 
-
-    free(grass_Lcount);
-    free(grass_Ccount);
-
-    return (retval);
-
-
-  return 0;
 }
 
-int PutR(pb *prob, int *lines, int *columns){
+int PutR(pb *prob){
 
   int retval=0,i,j,result=0;
 
@@ -70,20 +104,20 @@ int PutR(pb *prob, int *lines, int *columns){
         }
       }
       if(prob->map[i][j]=='.'){
-          lines[i]++;
-          columns[j]++;
+          prob->Lslots[i]++;
+          prob->Cslots[j]++;
       }
     }
   }
 
   return retval;
 }
-int PutT(pb *prob, int *lines, int *columns){
+int PutT(pb *prob){
 
   int retval=0,i,j;
 
   for(i=0;i<prob->L;i++){
-      if(lines[i]==prob->lines[i]){
+      if(prob->Lslots[i]==prob->lines[i]){
         for(j=0;j<prob->C;j++){
           if(prob->map[i][j]=='.'){
             retval=1;
@@ -91,17 +125,19 @@ int PutT(pb *prob, int *lines, int *columns){
             printf("T-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;
-            lines[i]--;
-            columns[j]--;
+            prob->Lslots[i]--;
+            prob->Cslots[j]--;
+            return retval;
         }
       }
     }
-  }
-  if(retval==1){
-    return retval;
+    else if(prob->Lslots[i]<prob->lines[i]){
+      printf("oi\n");
+      return -1;
+    }
   }
   for(i=0;i<prob->C;i++){
-      if(columns[i]==prob->columns[i]){
+      if(prob->Cslots[i]==prob->columns[i]){
         for(j=0;j<prob->L;j++){
           if(prob->map[i][j]=='.'){
             retval=1;
@@ -109,10 +145,14 @@ int PutT(pb *prob, int *lines, int *columns){
             printf("T-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;
-            lines[i]--;
-            columns[j]--;
+            prob->Lslots[i]--;
+            prob->Cslots[j]--;
+            return retval;
           }
         }
+      }
+      else if(prob->Cslots[i]<prob->columns[i]){
+        return -1;
       }
   }
   return retval;

@@ -9,6 +9,8 @@ typedef struct pb{
   int *lines;
   int *columns;
   char **map;
+  int *Lslots;
+  int *Cslots;
   //char **trees;
   //char **flag;
 

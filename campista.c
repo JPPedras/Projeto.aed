@@ -12,6 +12,7 @@ int main(int argc, char *argv[]){
   FILE *fp,*fp1;
   int out=0, write_val,season=0;
   char* fileOut;
+  //char **tempmap;
 
   fp=fopen(argv[1],"r");
   if (fp == (FILE*) NULL) {
@@ -25,6 +26,7 @@ int main(int argc, char *argv[]){
 
   while(1){
 
+    //char **tempmap;
 
     out=LoadProb(&fp,prob);
 
@@ -32,15 +34,18 @@ int main(int argc, char *argv[]){
       break;
     }
     else{
+
+
       //season=0 : tents<trees (baixa) | season=1 : tents=trees (alta)
       if(InitCheck(prob,&season)==0){
         write_val=-1;
       }
-      else if(season==1){
-        write_val=SolveMapL(prob);
+      else{
+        write_val=SolveMapL(prob,&fp1);
       }
-      writeFile(prob,write_val,&fp1);
-
+      if(write_val==-1){
+        writeFile(prob,write_val,&fp1);
+      }
       FreeMap(prob);
     }
 }

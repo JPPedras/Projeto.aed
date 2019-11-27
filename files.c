@@ -26,6 +26,23 @@ int LoadProb(FILE **fp, pb *prob){
     exit(0);
   }
 
+  prob->Lslots=(int*)malloc(prob->L*sizeof(int));
+  if(prob->Lslots==NULL){
+    exit(0);
+  }
+
+  prob->Cslots=(int*)malloc(prob->C*sizeof(int));
+  if(prob->Cslots==NULL){
+    exit(0);
+  }
+
+  for(i=0;i<prob->L;i++){
+    prob->Lslots[i]=0;
+  }
+  for(i=0;i<prob->C;i++){
+    prob->Cslots[i]=0;
+  }
+
   prob->map=(char**)malloc(prob->L*sizeof(char*));
   for(i=0;i<prob->L;i++){
     prob->map[i]=(char*)malloc(((prob->C)+1)*sizeof(char));
@@ -83,6 +100,8 @@ int LoadProb(FILE **fp, pb *prob){
 }
 
 
+
+
 void FreeProb(pb *prob){
   free(prob);
 }
@@ -92,6 +111,8 @@ void FreeMap(pb *prob){
 
   free(prob->lines);
   free(prob->columns);
+  free(prob->Lslots);
+  free(prob->Cslots);
   for(i=0;i<prob->L;i++){
     free(prob->map[i]);
   }
@@ -124,10 +145,23 @@ void ExtFile(char* argv, char** fileOut){
 
 void writeFile(pb *prob,int write_val,FILE **fp1){
 
-  fprintf(*fp1,"%d %d %d\n\n",prob->L,prob->C,write_val);
-  if(write_val==1){
+  int i,j;
 
-    //printf da solução
+  fprintf(*fp1,"%d %d %d\n",prob->L,prob->C,write_val);
+  if(write_val==1){
+    for(i=0;i<prob->L;i++){
+      for(j=0;j<prob->C;j++){
+        if(prob->map[i][j]=='R'){
+          fprintf(*fp1,".");
+        }
+        else{
+          fprintf(*fp1,"%c",prob->map[i][j]);
+        }
+      }
+      fprintf(*fp1,"\n");
+    }
   }
+  fprintf(*fp1,"\n");
+
 
 }
