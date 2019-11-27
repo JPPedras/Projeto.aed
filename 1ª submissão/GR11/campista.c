@@ -10,8 +10,9 @@ pb *prob;
 int main(int argc, char *argv[]){
 
   FILE *fp,*fp1;
-  int out=0, write_val,season=0;
+  int out=0, write_val;
   char* fileOut;
+  int i=0;
 
   fp=fopen(argv[1],"r");
   if (fp == (FILE*) NULL) {
@@ -31,18 +32,30 @@ int main(int argc, char *argv[]){
     if(out==1){
       break;
     }
+    else if(out==2){
+      write_val=-1;
+      writeFile(prob,write_val,&fp1);
+    }
     else{
-      //season=0 : tents<trees (baixa) | season=1 : tents=trees (alta)
-      if(InitCheck(prob,&season)==0){
-        write_val=-1;
-      }
-      else if(season==1){
-        write_val=SolveMapL(prob);
+      switch(prob->type){
+        case 'A':
+          write_val=check_a(prob);
+          break;
+        case 'B':
+          //printf("%d\n",i);
+          write_val=check_b(prob);
+          break;
+        case 'C':
+          write_val=check_c(prob);
+          break;
+        default:
+          write_val=-1;
       }
       writeFile(prob,write_val,&fp1);
 
       FreeMap(prob);
     }
+    i++;
 }
   FreeProb(prob);
   free(fileOut);

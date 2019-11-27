@@ -5,11 +5,11 @@ typedef struct pb{
 
   int L;
   int C;
+  char type;
   int cd[2];
   int *lines;
   int *columns;
   char **map;
-  //char **trees;
   //char **flag;
 
 }pb;

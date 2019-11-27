@@ -4,123 +4,8 @@
 #include"analysis.h"
 #include"files.h"
 
-int SolveMapL(pb *prob){
 
-  int i,*grass_Lcount,*grass_Ccount,act=0,retval=0;
-
-
-  grass_Lcount=(int*)malloc(prob->L*sizeof(int));
-  grass_Ccount=(int*)malloc(prob->C*sizeof(int));
-
-
-  while(1){
-    for(i=0;i<prob->L;i++){
-      grass_Lcount[i]=0;
-    }
-    for(i=0;i<prob->C;i++){
-      grass_Ccount[i]=0;
-    }
-    act=0;
-    act=PutR(prob,grass_Lcount,grass_Ccount);
-    act=PutT(prob,grass_Lcount,grass_Ccount);
-
-    if(act==0){
-      break;
-    }
-  }
-
-  for(i=0;i)
-
-
-
-
-    /*árvore binária em que cada vértice é uma árvore e tem:
-      -o número de espaços disponiveis à volta;
-      -um vetor [up,lf,rh,dn] que indica as posições desses espaços(1:disponivel, 0:indisponivel, -1:fora do mapa)
-
-      1º criar a árvore
-      2º ordena-la tipo um acervo
-
-
-      */
-
-
-    free(grass_Lcount);
-    free(grass_Ccount);
-
-    return (retval);
-
-
-  return 0;
-}
-
-int PutR(pb *prob, int *lines, int *columns){
-
-  int retval=0,i,j,result=0;
-
-  for(i=0;i<prob->L;i++){
-    for(j=0;j<prob->C;j++){
-      prob->cd[0]=i;
-      prob->cd[1]=j;
-      if(prob->map[i][j]=='.'){
-        result=check_b(prob);
-        if(result==1){
-          prob->map[i][j]='R';
-          retval=1;
-        }
-      }
-      if(prob->map[i][j]=='.'){
-          lines[i]++;
-          columns[j]++;
-      }
-    }
-  }
-
-  return retval;
-}
-int PutT(pb *prob, int *lines, int *columns){
-
-  int retval=0,i,j;
-
-  for(i=0;i<prob->L;i++){
-      if(lines[i]==prob->lines[i]){
-        for(j=0;j<prob->C;j++){
-          if(prob->map[i][j]=='.'){
-            retval=1;
-            prob->map[i][j]='T';
-            printf("T-i:%d  j:%d\n",i,j);
-            prob->lines[i]--;
-            prob->columns[j]--;
-            lines[i]--;
-            columns[j]--;
-        }
-      }
-    }
-  }
-  if(retval==1){
-    return retval;
-  }
-  for(i=0;i<prob->C;i++){
-      if(columns[i]==prob->columns[i]){
-        for(j=0;j<prob->L;j++){
-          if(prob->map[i][j]=='.'){
-            retval=1;
-            prob->map[i][j]='T';
-            printf("T-i:%d  j:%d\n",i,j);
-            prob->lines[i]--;
-            prob->columns[j]--;
-            lines[i]--;
-            columns[j]--;
-          }
-        }
-      }
-  }
-  return retval;
-}
-
-
-
-int InitCheck(pb *prob, int *season){
+int check_a(pb *prob){
 
   int tent_count[2]={0}, tree_count=0, i,j;
 
@@ -136,35 +21,21 @@ int InitCheck(pb *prob, int *season){
         tree_count++;
     }
   }
-  if(tent_count[0]!=tent_count[1] || tree_count<tent_count[0]){
-    return(0);
-  }
+  //printf("tents: %d/%d -- trees: %d\n",tent_count[0],tent_count[1],tree_count);
 
-  if(tree_count==tent_count[0]){
-    *season=1;
-  }
+  if(tent_count[0]!=tent_count[1] || tree_count<tent_count[0])
+    return(0);
 
   return 1;
 }
 
 int check_b(pb *prob){
 
-  int tree_count=0,i,j,k=0,retval=0,op[3]={-1,0,1},tents=0;
+  int tree_count=0,i,j,k=0,*tent_count,retval=0,op[3]={-1,0,1},tents=0;
 
   if(prob->map[prob->cd[0]][prob->cd[1]]=='A'){
     retval=1;
     return retval;
-  }
-
-  for(i=0;i<prob->L;i++){
-    if(prob->lines[prob->cd[0]]==0){
-      retval=1;
-    }
-  }
-  for(i=0;i<prob->C;i++){
-    if(prob->columns[prob->cd[1]]==0){
-      retval=1;
-    }
   }
   /*result=check_a(prob);
   if(result==0){
@@ -173,14 +44,14 @@ int check_b(pb *prob){
   //printf("ok2\n");
 
   //a_sides=(int*)malloc(8*sizeof(int));
-  //tent_count=(int*)malloc(2*sizeof(int));
+  tent_count=(int*)malloc(2*sizeof(int));
 
   /*for(i=0;i<8;i++){
     a_sides[i]=0;
   }*/
-  /*for(i=0;i<2;i++){
+  for(i=0;i<2;i++){
     tent_count[i]=0;
-  }*/
+  }
   /*
   if(prob->cd[0]==0){
     a_sides[0]=-1;
@@ -219,11 +90,7 @@ int check_b(pb *prob){
     retval=1;
   }
 
-  /*if(tree_count==1){
-    prob->trees[prob->cd[0]][prob->cd[1]]='1';
-  }*/
-
-  /*for(i=0;i<prob->C;i++){
+  for(i=0;i<prob->C;i++){
     if((prob->map[prob->cd[0]][i]=='T') && prob->cd[1]!=i)
       tent_count[0]++;
   }
@@ -237,7 +104,7 @@ int check_b(pb *prob){
   }
 
   //free(a_sides);
-  free(tent_count);*/
+  free(tent_count);
 
 
   //printf("trees:%d\n",tree_count);

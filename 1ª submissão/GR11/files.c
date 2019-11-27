@@ -7,14 +7,33 @@
 int LoadProb(FILE **fp, pb *prob){
 
   int i;
+  char buff;
 
-  if(fscanf(*fp,"%d %d",&(prob->L),&(prob->C))<2){
+  if(fscanf(*fp,"%d %d %c",&(prob->L),&(prob->C),&(prob->type))<3){
     return 1;
   }
 
-  prob->cd[0]=0;
-  prob->cd[1]=0;
 
+  if(prob->type=='B'){
+    if(fscanf(*fp,"%d %d",&(prob->cd[0]),&(prob->cd[1]))<2){
+      return 1;
+    }
+    if(prob->cd[0] >= prob->L || prob->cd[0] < 0 || prob->cd[1] >= prob->C || prob->cd[1] < 0){
+      for(i=0;i<(prob->L)+3;i++){
+        while(fscanf(*fp,"%c",&buff)>0){
+          if(buff=='\n'){
+            break;
+          }
+        }
+      }
+
+      return 2;
+    }
+  }
+  else{
+    prob->cd[0]=0;
+    prob->cd[1]=0;
+  }
 
   prob->lines=(int*)malloc(prob->L*sizeof(int));
   if(prob->lines==NULL){
@@ -30,18 +49,6 @@ int LoadProb(FILE **fp, pb *prob){
   for(i=0;i<prob->L;i++){
     prob->map[i]=(char*)malloc(((prob->C)+1)*sizeof(char));
   }
-
-  /*prob->trees=(char**)malloc(prob->L*sizeof(char*));
-  for(i=0;i<prob->L;i++){
-    prob->trees[i]=(char*)malloc(prob->C*sizeof(char));
-  }
-
-  for(i=0;i<prob->L;i++){
-    for(j=0;j<prob->C;j++){
-      prob->trees[i][j]='0';
-    }
-  }*/
-
 
   for(i=0;i<prob->L;i++){
     if(fscanf(*fp,"%d",&(prob->lines[i]))<1)
@@ -117,17 +124,18 @@ void ExtFile(char* argv, char** fileOut){
     i++;
   }
   (*fileOut)[i]='\0';
-  strcat(*fileOut,".tents");
+  strcat(*fileOut,".tents0");
 
   return;
 }
 
 void writeFile(pb *prob,int write_val,FILE **fp1){
 
-  fprintf(*fp1,"%d %d %d\n\n",prob->L,prob->C,write_val);
-  if(write_val==1){
-
-    //printf da solução
+  if(prob->type=='B'){
+    fprintf(*fp1,"%d %d %c %d %d %d\n\n",prob->L,prob->C,prob->type,prob->cd[0],prob->cd[1],write_val);
+  }
+  else{
+    fprintf(*fp1,"%d %d %c %d\n\n",prob->L,prob->C,prob->type,write_val);
   }
 
 }
