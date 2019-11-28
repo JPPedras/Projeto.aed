@@ -3,46 +3,39 @@
 #include"stack.h"
 
 
+void StackInsert(mod **head,char id, int cd0,int cd1){
 
-mod* StackInit(){
-  mod *head=NULL;
-  return head;
-}
-
-
-
-void StackInsert(mod *head,char id, int cd0,int cd1){
-
-  if(head!=NULL){
+  if(*head!=NULL){
     mod *new;
     new=(mod*)malloc(sizeof(mod));
-    new->next = head;
-    head=new;
+    new->next = *head;
+    *head=new;
     //printf("id:%c\n",head->next->id);
   }
   else{
-    head=(mod*)malloc(sizeof(mod));
-    head->next=NULL;
+    printf("oi\n");
+    (*head)=(mod*)malloc(sizeof(mod));
+    (*head)->next=NULL;
   }
-  head->id = id;
-  head->cdr[0]=cd0;
-  head->cdr[1]=cd1;
+  (*head)->id = id;
+  (*head)->cdr[0]=cd0;
+  (*head)->cdr[1]=cd1;
 
 
 
   return;
 }
 
-mod* HeadRemove(mod *head){
+mod* HeadRemove(mod **head){
 
   mod *aux;
 
-  printf("id:%c\n",head->next->id);
-  aux=head->next;
-  free(head);
-  head=aux;
+  //printf("id:%c\n",(*head)->next->id);
+  aux=(*head)->next;
+  free(*head);
+  *head=aux;
 
-  return head;
+  return (*head);
 }
 
 void FreeStack(mod *head){

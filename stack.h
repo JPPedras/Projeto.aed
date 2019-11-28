@@ -9,8 +9,7 @@ typedef struct mod{
 
 }mod;
 
-mod* StackInit();
-void StackInsert(mod *head,char id, int cd0,int cd1);
-mod* HeadRemove(mod *head);
+void StackInsert(mod **head,char id, int cd0,int cd1);
+mod* HeadRemove(mod **head);
 void FreeStack(mod *head);
 #endif

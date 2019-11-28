@@ -138,7 +138,7 @@ void ExtFile(char* argv, char** fileOut){
     i++;
   }
   (*fileOut)[i]='\0';
-  strcat(*fileOut,".tents");
+  strcat(*fileOut,".tentz");
 
   return;
 }

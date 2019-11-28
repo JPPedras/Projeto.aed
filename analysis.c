@@ -5,7 +5,7 @@
 #include"files.h"
 #include"stack.h"
 
-int SolveMapL(pb *prob, FILE **fp1, mod *stack){
+int SolveMapL(pb *prob, FILE **fp1, mod **stack){
 
   //printf("oi\n");
 
@@ -22,6 +22,7 @@ int SolveMapL(pb *prob, FILE **fp1, mod *stack){
     }
     act=0;
     act=PutR(prob,stack);
+    printf("slots[1]:%d\n",prob->Cslots[1]);
     act=PutT(prob,stack);
     //printf("id11:%c\n",stack->id);
     for(k=0;k<prob->L;k++){
@@ -68,20 +69,29 @@ int SolveMapL(pb *prob, FILE **fp1, mod *stack){
         prob->Lslots[i]--;
         prob->Cslots[j]--;
         prob->map[i][j]='T';
-        printf("T-i:%d  j:%d\n",i,j);
-        StackInsert(stack,'1',i,j);
+        printf("Ta-i:%d  j:%d\n",i,j);
+        StackInsert(stack,'2',i,j);
         retval=SolveMapL(prob,fp1,stack);
-        printf("ok\n");
-        while(stack->id!='1'){
-          prob->map[stack->cdr[0]][stack->cdr[1]]='.';
-          stack=HeadRemove(stack);
-          printf("passou\n");
+        //printf("id:%c\n",(*stack)->id);
+        while((*stack)->id!='2'){
+          prob->Lslots[(*stack)->cdr[0]]++;
+          prob->Cslots[(*stack)->cdr[1]]++;
+          //printf("oi1111");
+          if((*stack)->id=='1'){
+            prob->lines[(*stack)->cdr[0]]++;
+            prob->columns[(*stack)->cdr[1]]++;
+          }
+          prob->map[(*stack)->cdr[0]][(*stack)->cdr[1]]='.';
+          *stack=HeadRemove(stack);
+          //printf("passou\n");
         }
         if(retval==1){
           return 1;
         }
-        stack->id = '0';
+        (*stack)->id = '0';
         prob->map[i][j]='R';
+        prob->lines[i]++;
+        prob->columns[j]++;
       }
     }
   }
@@ -101,7 +111,7 @@ int SolveMapL(pb *prob, FILE **fp1, mod *stack){
 
 }
 
-int PutR(pb *prob,mod *stack){
+int PutR(pb *prob,mod **stack){
 
   int retval=0,i,j,result=0;
 
@@ -119,6 +129,7 @@ int PutR(pb *prob,mod *stack){
         }
       }
       if(prob->map[i][j]=='.'){
+          //printf("slot:[%d,%d]\n",i,j);
           prob->Lslots[i]++;
           prob->Cslots[j]++;
       }
@@ -127,18 +138,21 @@ int PutR(pb *prob,mod *stack){
 
   return retval;
 }
-int PutT(pb *prob,mod *stack){
+int PutT(pb *prob,mod **stack){
 
   int retval=0,i,j;
+  printf("slots[1]T:%d\n",prob->Cslots[1]);
+
 
   for(i=0;i<prob->L;i++){
       if(prob->Lslots[i]==prob->lines[i]){
         for(j=0;j<prob->C;j++){
           if(prob->map[i][j]=='.'){
             retval=1;
+            printf("slots:%d -- lines:%d\n",prob->Lslots[i],prob->lines[i]);
             prob->map[i][j]='T';
-            StackInsert(stack,'0',i,j);
-            printf("T-i:%d  j:%d\n",i,j);
+            StackInsert(stack,'1',i,j);
+            printf("Tl-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;
             prob->Lslots[i]--;
@@ -148,18 +162,22 @@ int PutT(pb *prob,mod *stack){
       }
     }
     else if(prob->Lslots[i]<prob->lines[i]){
-      printf("oi\n");
+      //printf("oi11\n");
       return -1;
     }
   }
-  for(i=0;i<prob->C;i++){
+  //printf("slots[1]L:%d\n",prob->Cslots[1]);
+
+  for(j=0;j<prob->C;j++){
+      //printf("slots[%d]L:%d\n",i,prob->Cslots[i]);
       if(prob->Cslots[i]==prob->columns[i]){
-        for(j=0;j<prob->L;j++){
+        for(i=0;i<prob->L;i++){
           if(prob->map[i][j]=='.'){
             retval=1;
+            printf("slots:%d -- columns:%d\n",prob->Cslots[i],prob->columns[i]);
             prob->map[i][j]='T';
-            StackInsert(stack,'0',i,j);
-            printf("T-i:%d  j:%d\n",i,j);
+            StackInsert(stack,'1',i,j);
+            printf("Tl-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;
             prob->Lslots[i]--;
