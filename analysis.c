@@ -22,7 +22,7 @@ int SolveMapL(pb *prob, FILE **fp1, mod **stack){
     }
     act=0;
     act=PutR(prob,stack);
-    printf("slots[1]:%d\n",prob->Cslots[1]);
+    //printf("slots[1]:%d\n",prob->Cslots[1]);
     act=PutT(prob,stack);
     //printf("id11:%c\n",stack->id);
     for(k=0;k<prob->L;k++){
@@ -149,10 +149,10 @@ int PutT(pb *prob,mod **stack){
         for(j=0;j<prob->C;j++){
           if(prob->map[i][j]=='.'){
             retval=1;
-            printf("slots:%d -- lines:%d\n",prob->Lslots[i],prob->lines[i]);
+            //printf("slots:%d -- lines:%d\n",prob->Lslots[i],prob->lines[i]);
             prob->map[i][j]='T';
             StackInsert(stack,'1',i,j);
-            printf("Tl-i:%d  j:%d\n",i,j);
+            printf("LTl-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;
             prob->Lslots[i]--;
@@ -170,14 +170,14 @@ int PutT(pb *prob,mod **stack){
 
   for(j=0;j<prob->C;j++){
       //printf("slots[%d]L:%d\n",i,prob->Cslots[i]);
-      if(prob->Cslots[i]==prob->columns[i]){
+      if(prob->Cslots[j]==prob->columns[j]){
         for(i=0;i<prob->L;i++){
           if(prob->map[i][j]=='.'){
             retval=1;
             printf("slots:%d -- columns:%d\n",prob->Cslots[i],prob->columns[i]);
             prob->map[i][j]='T';
             StackInsert(stack,'1',i,j);
-            printf("Tl-i:%d  j:%d\n",i,j);
+            printf("CTl-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;
             prob->Lslots[i]--;
@@ -186,7 +186,7 @@ int PutT(pb *prob,mod **stack){
           }
         }
       }
-      else if(prob->Cslots[i]<prob->columns[i]){
+      else if(prob->Cslots[j]<prob->columns[j]){
         return -1;
       }
   }

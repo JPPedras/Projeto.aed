@@ -13,7 +13,7 @@ void StackInsert(mod **head,char id, int cd0,int cd1){
     //printf("id:%c\n",head->next->id);
   }
   else{
-    printf("oi\n");
+    //printf("oi\n");
     (*head)=(mod*)malloc(sizeof(mod));
     (*head)->next=NULL;
   }
