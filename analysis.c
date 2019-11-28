@@ -3,12 +3,15 @@
 
 #include"analysis.h"
 #include"files.h"
+#include"stack.h"
 
-int SolveMapL(pb *prob, FILE **fp1){
+int SolveMapL(pb *prob, FILE **fp1, mod *stack){
 
-  printf("oi\n");
+  //printf("oi\n");
 
   int i,j,k,l,out=0,act=0,retval=0;
+
+
 
   while(1){
     for(i=0;i<prob->L;i++){
@@ -18,8 +21,9 @@ int SolveMapL(pb *prob, FILE **fp1){
       prob->Cslots[i]=0;
     }
     act=0;
-    act=PutR(prob);
-    act=PutT(prob);
+    act=PutR(prob,stack);
+    act=PutT(prob,stack);
+    //printf("id11:%c\n",stack->id);
     for(k=0;k<prob->L;k++){
       for(l=0;l<prob->C;l++){
         printf("%c",prob->map[k][l]);
@@ -64,10 +68,19 @@ int SolveMapL(pb *prob, FILE **fp1){
         prob->Lslots[i]--;
         prob->Cslots[j]--;
         prob->map[i][j]='T';
-        retval=SolveMapL(prob,fp1);
+        printf("T-i:%d  j:%d\n",i,j);
+        StackInsert(stack,'1',i,j);
+        retval=SolveMapL(prob,fp1,stack);
+        printf("ok\n");
+        while(stack->id!='1'){
+          prob->map[stack->cdr[0]][stack->cdr[1]]='.';
+          stack=HeadRemove(stack);
+          printf("passou\n");
+        }
         if(retval==1){
           return 1;
         }
+        stack->id = '0';
         prob->map[i][j]='R';
       }
     }
@@ -88,7 +101,7 @@ int SolveMapL(pb *prob, FILE **fp1){
 
 }
 
-int PutR(pb *prob){
+int PutR(pb *prob,mod *stack){
 
   int retval=0,i,j,result=0;
 
@@ -100,6 +113,8 @@ int PutR(pb *prob){
         result=check_b(prob);
         if(result==1){
           prob->map[i][j]='R';
+          StackInsert(stack,'0',i,j);
+          //printf("id:%c\n",stack->id);
           retval=1;
         }
       }
@@ -112,7 +127,7 @@ int PutR(pb *prob){
 
   return retval;
 }
-int PutT(pb *prob){
+int PutT(pb *prob,mod *stack){
 
   int retval=0,i,j;
 
@@ -122,6 +137,7 @@ int PutT(pb *prob){
           if(prob->map[i][j]=='.'){
             retval=1;
             prob->map[i][j]='T';
+            StackInsert(stack,'0',i,j);
             printf("T-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;
@@ -142,6 +158,7 @@ int PutT(pb *prob){
           if(prob->map[i][j]=='.'){
             retval=1;
             prob->map[i][j]='T';
+            StackInsert(stack,'0',i,j);
             printf("T-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;

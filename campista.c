@@ -4,6 +4,7 @@
 
 #include"files.h"
 #include"analysis.h"
+#include"stack.h"
 
 pb *prob;
 
@@ -12,6 +13,7 @@ int main(int argc, char *argv[]){
   FILE *fp,*fp1;
   int out=0, write_val,season=0;
   char* fileOut;
+  mod *stack;
   //char **tempmap;
 
   fp=fopen(argv[1],"r");
@@ -23,6 +25,7 @@ int main(int argc, char *argv[]){
   fp1=fopen(fileOut,"w");
 
   ProbInit(&prob);
+  stack=StackInit();
 
   while(1){
 
@@ -41,7 +44,7 @@ int main(int argc, char *argv[]){
         write_val=-1;
       }
       else{
-        write_val=SolveMapL(prob,&fp1);
+        write_val=SolveMapL(prob,&fp1,stack);
       }
       if(write_val==-1){
         writeFile(prob,write_val,&fp1);
@@ -50,6 +53,7 @@ int main(int argc, char *argv[]){
     }
 }
   FreeProb(prob);
+  FreeStack(stack);
   free(fileOut);
 
   fclose(fp);

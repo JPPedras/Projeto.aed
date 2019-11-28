@@ -16,12 +16,6 @@ typedef struct pb{
 
 }pb;
 
-typedef struct mod{
-
-  char id;
-  int cdr[2];
-  mod next;
-}mod;
 
 
 int LoadProb(FILE **fp,pb *prob);
