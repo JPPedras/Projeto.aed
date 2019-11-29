@@ -154,6 +154,9 @@ void writeFile(pb *prob,int write_val,FILE **fp1){
         if(prob->map[i][j]=='R'){
           fprintf(*fp1,".");
         }
+        else if(prob->map[i][j]=='O'){
+          fprintf(*fp1,"A");
+        }
         else{
           fprintf(*fp1,"%c",prob->map[i][j]);
         }

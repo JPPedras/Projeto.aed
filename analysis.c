@@ -12,7 +12,6 @@ int SolveMapL(pb *prob, FILE **fp1, mod **stack){
   int i,j,k,l,out=0,act=0,retval=0;
 
 
-
   while(1){
     for(i=0;i<prob->L;i++){
       prob->Lslots[i]=0;
@@ -25,13 +24,13 @@ int SolveMapL(pb *prob, FILE **fp1, mod **stack){
     //printf("slots[1]:%d\n",prob->Cslots[1]);
     act=PutT(prob,stack);
     //printf("id11:%c\n",stack->id);
-    /*for(k=0;k<prob->L;k++){
+    for(k=0;k<prob->L;k++){
       for(l=0;l<prob->C;l++){
         printf("%c",prob->map[k][l]);
       }
       printf("\n");
     }
-    printf("\n\n");*/
+    printf("\n\n");
     if(act==0){
       break;
     }
@@ -69,19 +68,29 @@ int SolveMapL(pb *prob, FILE **fp1, mod **stack){
         prob->Lslots[i]--;
         prob->Cslots[j]--;
         prob->map[i][j]='T';
+        prob->cd[0]=i;
+        prob->cd[1]=j;
         printf("Ta-i:%d  j:%d\n",i,j);
         StackInsert(stack,'2',i,j);
+        TreeCountR(prob,stack);
         retval=SolveMapL(prob,fp1,stack);
         //printf("id:%c\n",(*stack)->id);
         while((*stack)->id!='2'){
-          prob->Lslots[(*stack)->cdr[0]]++;
-          prob->Cslots[(*stack)->cdr[1]]++;
+          if((*stack)->id!='3'){
+            prob->Lslots[(*stack)->cdr[0]]++;
+            prob->Cslots[(*stack)->cdr[1]]++;
+          }
           //printf("oi1111");
           if((*stack)->id=='1'){
             prob->lines[(*stack)->cdr[0]]++;
             prob->columns[(*stack)->cdr[1]]++;
           }
-          prob->map[(*stack)->cdr[0]][(*stack)->cdr[1]]='.';
+          if((*stack)->id=='3'){
+            prob->map[(*stack)->cdr[0]][(*stack)->cdr[1]]='A';
+          }
+          else{
+            prob->map[(*stack)->cdr[0]][(*stack)->cdr[1]]='.';
+          }
           *stack=HeadRemove(stack);
           //printf("passou\n");
         }
@@ -151,6 +160,9 @@ int PutT(pb *prob,mod **stack){
             retval=1;
             //printf("slots:%d -- lines:%d\n",prob->Lslots[i],prob->lines[i]);
             prob->map[i][j]='T';
+            prob->cd[0]=i;
+            prob->cd[1]=j;
+            TreeCountR(prob,stack);
             StackInsert(stack,'1',i,j);
             printf("LTl-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
@@ -176,21 +188,75 @@ int PutT(pb *prob,mod **stack){
             retval=1;
             //printf("slots:%d -- columns:%d\n",prob->Cslots[i],prob->columns[i]);
             prob->map[i][j]='T';
+            prob->cd[0]=i;
+            prob->cd[1]=j;
+            TreeCountR(prob,stack);
             StackInsert(stack,'1',i,j);
             printf("CTl-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;
             prob->Lslots[i]--;
             prob->Cslots[j]--;
+
             return retval;
           }
         }
       }
       else if(prob->Cslots[j]<prob->columns[j]){
+
         return -1;
       }
   }
   return retval;
+}
+
+void TreeCountR(pb *prob, mod **stack){
+
+  int tree_count=0,i,j,op[3]={-1,0,1},pos[4]={0};
+
+  for(i=0;i<3;i++){
+    for(j=0;j<3;j++){
+      if(op[i]==0 && op[j]==0)
+        continue;
+      if((prob->cd[0])+op[i]>=0 && (prob->cd[0])+op[i]<prob->L && (prob->cd[1])+op[j]>=0 && (prob->cd[1])+op[j]<prob->C){
+        if((prob->map[(prob->cd[0])+op[i]][(prob->cd[1])+op[j]]=='A') && (op[i]==0 || op[j]==0)){
+          tree_count++;
+          if(op[i]==-1)
+            pos[0]=1;
+          if(op[i]==1)
+            pos[1]=1;
+          if(op[j]==-1)
+            pos[2]=1;
+          if(op[j]==1)
+            pos[3]=1;
+        }
+      }
+    }
+  }
+  if(tree_count==1){
+    if(pos[0]==1){
+      prob->map[prob->cd[0]-1][prob->cd[1]]='O';
+      StackInsert(stack,'3',prob->cd[0]-1,prob->cd[1]);
+
+    }
+    if(pos[1]==1){
+      prob->map[prob->cd[0]+1][prob->cd[1]]='O';
+      StackInsert(stack,'3',prob->cd[0]+1,prob->cd[1]);
+
+    }
+    if(pos[2]==1){
+      prob->map[prob->cd[0]][prob->cd[1]-1]='O';
+      StackInsert(stack,'3',prob->cd[0],prob->cd[1]-1);
+
+    }
+    if(pos[3]==1){
+      prob->map[prob->cd[0]][prob->cd[1]+1]='O';
+      StackInsert(stack,'3',prob->cd[0],prob->cd[1]+1);
+    }
+
+  }
+
+  return;
 }
 
 
@@ -338,22 +404,22 @@ int check_c(pb *prob){
   }*/
 
 
-  for(i=0;i<prob->L;i++){
+  /*for(i=0;i<prob->L;i++){
     for(j=0;j<prob->C;j++){
       prob->cd[0]=i;
       prob->cd[1]=j;
       if(prob->map[i][j]=='T'){
         result=check_b(prob);
         if(result==1){
-          /*for(i=0;i<prob->L;i++){
+          for(i=0;i<prob->L;i++){
             free(prob->flag[i]);
           }
-          free(prob->flag);*/
+          free(prob->flag);
           return(1);
         }
       }
     }
-  }
+  }*/
 
   for(i=0;i<prob->L;i++){
     for(j=0;j<prob->C;j++){

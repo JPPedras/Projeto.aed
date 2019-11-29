@@ -33,6 +33,7 @@ int main(int argc, char *argv[]){
     out=LoadProb(&fp,prob);
 
     if(out==1){
+      printf("oi\n");
       break;
     }
     else{

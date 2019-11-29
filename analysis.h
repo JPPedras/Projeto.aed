@@ -11,6 +11,7 @@ void Tree_Tent(pb* prob,int n,int m,int *result);
 int SolveMapL(pb *prob, FILE **fp1,mod **stack);
 int PutR(pb *prob, mod **stack);
 int PutT(pb *prob, mod **stack);
+void TreeCountR(pb *prob,mod **stack);
 
 
 #endif
