@@ -1,0 +1,220 @@
+5 5 1
+...T.
+TA.A.
+.....
+AAT.T
+T...A
+
+8 8 -1
+
+8 8 1
+TATAT.TA
+A.......
+A..A..AT
+T..TAT..
+.A.A....
+.T.TAT..
+A......T
+TAT.AT.A
+
+8 8 1
+A.A.A.TA
+T.T.T...
+....A.AT
+AT..T...
+......TA
+TA.TA...
+.....TAT
+.......A
+
+8 8 1
+.TA.A.TA
+.A..T...
+.T....AT
+.....TA.
+..TA..AT
+A...T...
+T...A.AT
+.....TA.
+
+21 21 1
+..AT..A....AT..T.....
+TA....T...T.A..AAT..T
+..TATA..T.A.T.AT....A
+A...A...A...A..A....A
+TAT.TAT..AT.T..T....T
+....A...TA...........
+....T.TA.AT....TAT.TA
+T.A.A........TA..A...
+A.T.T..TAA.T...TAT.T.
+T......A.T.A.TAA.A.A.
+AATAT..T.......T...TA
+T...........TA.......
+A.AT..AT......TATA.AT
+T........T..TAA..A...
+A.TA.TA..A....T..T.TA
+T......T.A..T........
+AAT....A.T..A.TATA.TA
+...AT....A..........A
+.......TATAT.T.T.TA.T
+TAAT....A....A.A.....
+.....TA.T.TA..TAATAT.
+
+21 21 -1
+
+21 21 1
+.AT...AT..T..TATA.T.T
+T..AT..A..A.......A.A
+A.T.A..T.TAT...A.ATAT
+..A.T......A.TAT.....
+.AT........T..A.....A
+.....TA.TA.AA.TAT.TAT
+..AT....A.A.T..A..A..
+AT...TA.T.T....T..T.T
+....................A
+.TATAT.AT....A.T..AT.
+...A.A...A.T.T.AAT...
+T.AT.T.TAT.A...T...AT
+A.........AT...A..T..
+..TA..T.TA...T.T..A.T
+T.A.TAA...A..A.A.T..A
+A.T.A.TAT.T......A.AT
+....T.A.......T...TA.
+TAT..A...TAT..AAT..AT
+A....T...A.A.AT...T..
+TAT...AT.T.TA...A.A.T
+A....TA.......TATAT.A
+
+15 17 -1
+
+15 17 -1
+
+1 16 1
+AT..TAAT..TATAAT
+
+1 16 -1
+
+1 16 -1
+
+16 1 -1
+
+16 1 -1
+
+16 1 -1
+
+1 16 1
+AT..TAAT..TATAAT
+
+1 16 1
+AT..TAAT..TATAAT
+
+1 16 1
+AT..TAAT..TATAAT
+
+1 16 1
+AT..TAAT..TATAAT
+
+1 16 1
+AT..TAAT..TATAAT
+
+1 16 1
+AT..TAAT..TATAAT
+
+16 1 -1
+
+16 1 -1
+
+16 1 -1
+
+16 1 -1
+
+16 1 -1
+
+16 1 -1
+
+16 1 -1
+
+1 16 1
+AT..TAAT..TATAAT
+
+16 1 -1
+
+1 16 1
+AT..TAAT..TATAAT
+
+21 21 1
+.A.....T.TA..T.AT..TA
+.T..T..A...T.A.......
+A...A...AT.A.A......T
+T...T......TATAT.T..A
+..T.A.T.A...A....A.TA
+TAA.TAA.TAT.T.TAAT..A
+......A...A.........T
+TATA..T...T.TA......A
+.A..TAAAT......T..T.T
+.T....T........A..A..
+..AAT.AAT.T.T.TA.....
+TAT...T.A.AAA...TA.T.
+........T..T..TA...A.
+A....T.........ATATAT
+T.TAAAA.A..TAT.A.....
+....T.T.T....A.T.ATAT
+AT.........TAT...A...
+......TATA...A.T.T...
+AT.TA.A...A....A...AT
+A..A..TAT.T..TA.TAT..
+T..T..............A..
+
+21 21 1
+.A..A..T.TA..T.AT..TA
+.T..T..A...T.A.......
+A...A...AT.A.A......T
+T...T......TATAT.T..A
+..T.A.T.A...A....A.TA
+TAA.TAA.TAT.T.TAAT..A
+......A...A.........T
+TATA..T...T.TA......A
+.A..TAAAT......T..T.T
+.T....T........A..A..
+..AAT.AAT.T.T.TA.....
+TAT...T.A.AAA...TA.T.
+........T..T..TA...A.
+A....T.........ATATAT
+T.TAAAA.A..TAT.A.....
+....T.T.T....A.T.ATAT
+AT.........TAT...A...
+......TATA...A.T.T...
+AT.TA.A...A....A...AT
+A..A..TAT.T..TA.TAT..
+T..T..............A..
+
+8 8 1
+AT.TAT..
+...A...T
+.T..A..A
+.A..TAT.
+T.TA...A
+A....TAT
+A..A...A
+T..TAT.T
+
+8 8 1
+TATA..TA
+....T...
+....A.AT
+AT.A.A..
+...T.TAT
+TA......
+...TA.A.
+TA....T.
+
+8 8 1
+T..T.TAT
+A..A...A
+..AT....
+A.....T.
+T..AT.A.
+..T.....
+..A.....
+TATA.AT.
+

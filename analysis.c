@@ -20,6 +20,17 @@ int SolveMapL(pb *prob, FILE **fp1, mod **stack){
       prob->Cslots[i]=0;
     }
     act=0;
+
+    for(i=0;i<prob->L;i++){
+      for(j=0;j<prob->C;j++){
+        prob->cd[0]=i;
+        prob->cd[1]=j;
+        if(prob->map[i][j]!='T'){
+          continue;
+        }
+        TreeCountR(prob,stack);
+      }
+    }
     act=PutR(prob,stack);
     //printf("slots[1]:%d\n",prob->Cslots[1]);
     act=PutT(prob,stack);
