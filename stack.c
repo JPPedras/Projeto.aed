@@ -3,6 +3,8 @@
 #include"stack.h"
 
 
+
+
 void StackInsert(mod **head,char id, int cd0,int cd1){
 
   if(*head!=NULL){

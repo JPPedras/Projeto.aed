@@ -9,7 +9,7 @@ int SolveMapL(pb *prob, FILE **fp1, mod **stack){
 
   //printf("oi\n");
 
-  int i,j,k,l,out=0,act=0,retval=0;
+  int i,j,out=0,act=0,retval=0;
 
 
   while(1){
@@ -24,13 +24,13 @@ int SolveMapL(pb *prob, FILE **fp1, mod **stack){
     //printf("slots[1]:%d\n",prob->Cslots[1]);
     act=PutT(prob,stack);
     //printf("id11:%c\n",stack->id);
-    for(k=0;k<prob->L;k++){
+    /*for(k=0;k<prob->L;k++){
       for(l=0;l<prob->C;l++){
         printf("%c",prob->map[k][l]);
       }
       printf("\n");
     }
-    printf("\n\n");
+    printf("\n\n");*/
     if(act==0){
       break;
     }
@@ -70,7 +70,7 @@ int SolveMapL(pb *prob, FILE **fp1, mod **stack){
         prob->map[i][j]='T';
         prob->cd[0]=i;
         prob->cd[1]=j;
-        printf("Ta-i:%d  j:%d\n",i,j);
+        //printf("Ta-i:%d  j:%d\n",i,j);
         StackInsert(stack,'2',i,j);
         TreeCountR(prob,stack);
         retval=SolveMapL(prob,fp1,stack);
@@ -164,7 +164,7 @@ int PutT(pb *prob,mod **stack){
             prob->cd[1]=j;
             TreeCountR(prob,stack);
             StackInsert(stack,'1',i,j);
-            printf("LTl-i:%d  j:%d\n",i,j);
+            //printf("LTl-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;
             prob->Lslots[i]--;
@@ -192,7 +192,7 @@ int PutT(pb *prob,mod **stack){
             prob->cd[1]=j;
             TreeCountR(prob,stack);
             StackInsert(stack,'1',i,j);
-            printf("CTl-i:%d  j:%d\n",i,j);
+            //printf("CTl-i:%d  j:%d\n",i,j);
             prob->lines[i]--;
             prob->columns[j]--;
             prob->Lslots[i]--;

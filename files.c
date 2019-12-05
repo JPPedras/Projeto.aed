@@ -129,16 +129,20 @@ void ProbInit(pb **prob){
 
 void ExtFile(char* argv, char** fileOut){
 
-  int i=0;
+  int i=0,j=0;
 
   (*fileOut)=(char*)malloc((strlen(argv)+2)*sizeof(char));
 
-  while(argv[i]!='.'){
-    (*fileOut)[i]=argv[i];
-    i++;
+  char *e = strrchr(argv, '.');
+  i=(int)(e-argv);
+  while(j<i){
+    (*fileOut)[j]=argv[j];
+    j++;
   }
   (*fileOut)[i]='\0';
-  strcat(*fileOut,".tentz");
+  strcat(*fileOut,".tents");
+
+  //printf("%s\n",(*fileOut));
 
   return;
 }
