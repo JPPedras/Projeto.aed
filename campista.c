@@ -6,54 +6,47 @@
 #include"analysis.h"
 #include"stack.h"
 
-pb *prob;
-mod *stack;
+pb *prob;     //guarda a informacao relativa ao problema a resolver
+mod *stack;   //pilha utilizada para fazer o backtrack quando se chega a um beco sem saida
 
 int main(int argc, char *argv[]){
 
   FILE *fp,*fp1;
-  int out=0, write_val,season=0;
-  char* fileOut;
-  //char **tempmap;
+  int out=0, write_val;
+  char* fileOut;  //nome do ficheiro de saida
 
   fp=fopen(argv[1],"r");
   if (fp == (FILE*) NULL) {
     exit(1);
   }
-  ExtFile(argv[1],&fileOut);
+  ExtFile(argv[1],&fileOut);  //cria o nome do ficheiro de saida
 
   fp1=fopen(fileOut,"w");
 
-  ProbInit(&prob);
+  ProbInit(&prob);      //inicializa a estrutura utilizada para guardar o problema
 
   while(1){
 
-    //char **tempmap;
-
-    out=LoadProb(&fp,prob);
+    out=LoadProb(&fp,prob);     //le o ficheiro de entrada e aloca espaco para os diferentes elementos que definem o problema
 
     if(out==1){
-      //printf("oi\n");
       break;
     }
     else{
-
-
-      //season=0 : tents<trees (baixa) | season=1 : tents=trees (alta)
-      if(InitCheck(prob,&season)==0){
+      if(InitCheck(prob)==0){   //verifica se o problema esta bem definido
         write_val=-1;
       }
       else{
-        write_val=SolveMapL(prob,&fp1,&stack);
+        write_val=SolveMapL(prob,&fp1,&stack);  //resolve o problema
       }
       if(write_val==-1){
-        writeFile(prob,write_val,&fp1);
+        writeFile(prob,write_val,&fp1);     //caso se tenha concluido que o problema nao tem solucao escreve essa informacao no ficheiro de saida
       }
-      FreeMap(prob);
+      FreeMap(prob);      //liberta a memoria relativa aos elementos que definem o problema
     }
 }
-  FreeProb(prob);
-  FreeStack(stack);
+  FreeProb(prob);     //liberta a estrutura do prolema
+  FreeStack(stack);   //liberta a pilha
   free(fileOut);
 
   fclose(fp);

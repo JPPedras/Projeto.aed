@@ -5,6 +5,13 @@
 #include"files.h"
 #include"stack.h"
 
+/*
+Funcao recursiva que resolve o problema
+Argumentos: ponteiro para a estrutura onde esta guardado o problema
+            ponteiro para o ficheiro de saida para escrever caso seja encontrada a solucao nessa iteracao da recursiva
+            ponteiro para a pilha de modo a guardar a informacao relativa as modificacoes feitas ao mapa
+*/
+
 int SolveMapL(pb *prob, FILE **fp1, mod **stack){
 
   //printf("oi\n");
@@ -130,7 +137,10 @@ int SolveMapL(pb *prob, FILE **fp1, mod **stack){
       */
 
 }
-
+/*
+Percorre o mapa a procura de sitios onde se possa assegurar que nao vai haver, de certeza, uma tenda, colocando nessa posicao
+o caracter 'R'
+*/
 int PutR(pb *prob,mod **stack){
 
   int retval=0,i,j,result=0;
@@ -272,7 +282,7 @@ void TreeCountR(pb *prob, mod **stack){
 
 
 
-int InitCheck(pb *prob, int *season){
+int InitCheck(pb *prob){
 
   int tent_count[2]={0}, tree_count=0, i,j;
 
@@ -290,10 +300,6 @@ int InitCheck(pb *prob, int *season){
   }
   if(tent_count[0]!=tent_count[1] || tree_count<tent_count[0]){
     return(0);
-  }
-
-  if(tree_count==tent_count[0]){
-    *season=1;
   }
 
   return 1;
